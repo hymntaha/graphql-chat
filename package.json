@@ -12,6 +12,8 @@
   "dependencies": {
     "apollo-server": "^2.19.0",
     "graphql": "^15.4.0",
-    "sequelize-cli": "^6.2.0"
+    "pg": "^8.4.2",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.3.5"
   }
 }
