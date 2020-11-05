@@ -5,7 +5,7 @@ module.exports = {
     getUsers: async () => {
       try {
         const users = await User.findAll();
-
+        console.log("HEREEEEEEE", users);
         return users;
       } catch (err) {
         console.log(err);
