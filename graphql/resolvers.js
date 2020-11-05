@@ -1,5 +1,5 @@
 const { User } = require("../models");
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 
 module.exports = {
   Query: {
@@ -15,16 +15,15 @@ module.exports = {
   },
   Mutation: {
     register: async (_, args, context, info) => {
-      const { username, email, password, confirmPassword } = args;
+      let { username, email, password, confirmPassword } = args;
 
       try {
         // TODO: Validate input data
 
         // TODO: Check if username / email exists
 
-
-
-
+        // TODO: Hash Password
+        password =  await bcrypt.hash(password, 6)
         // TODO: Create user
         const user = await User.create({
           username,
