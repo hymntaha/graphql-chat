@@ -1,34 +1,8 @@
-const {ApolloServer, gql} = require('apollo-server');
-
-// The GraphQL Schema
-const typeDefs = gql`
-    type User {
-        username: String!
-        email: String!
-    }
-    type Query{
-        getUsers: [User]!
-    }
-`;
+const {ApolloServer} = require('apollo-server');
 
 // A map of functions which returns data for the schema
-const resolvers = {
-  Query: {
-    getUsers: () => {
-      const users = [
-        {
-          username: 'john',
-          email: 'john@email.com'
-        },
-        {
-          username: 'jane',
-          email: 'jane@email.com'
-        }
-      ]
-      return users
-    },
-  }
-}
+const resolvers = require('./graphql/resolvers');
+const typeDefs = require('./graphql/typeDefs');
 
 const server = new ApolloServer({
   typeDefs,
