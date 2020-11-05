@@ -1,4 +1,5 @@
 const { User } = require("../models");
+const bcrypt = require('bcryptjs');
 
 module.exports = {
   Query: {
@@ -20,6 +21,9 @@ module.exports = {
         // TODO: Validate input data
 
         // TODO: Check if username / email exists
+
+
+
 
         // TODO: Create user
         const user = await User.create({
