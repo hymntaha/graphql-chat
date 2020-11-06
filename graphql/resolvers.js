@@ -1,24 +1,30 @@
-const { User } = require("../models");
 const bcrypt = require("bcryptjs");
 const { UserInputError, AuthenticationError } = require("apollo-server");
 const jwt = require("jsonwebtoken");
+const { Op } = require("sequelize");
+
+const { User } = require("../models");
 const { JWT_SECRET } = require("../config/env.json");
 
 module.exports = {
   Query: {
     getUsers: async (_, __, context) => {
       try {
+        let user;
         if (context.req && context.req.headers.authorization) {
           const token = context.req.headers.authorization.split("Bearer ")[1];
           jwt.verify(token, JWT_SECRET, (err, decodedToken) => {
             if (err) {
-              throw new AuthenticationError("Unauthorized");
+              throw new AuthenticationError("Unauthenticated");
             }
             user = decodedToken;
           });
         }
 
-        const users = await User.findAll();
+        const users = await User.findAll({
+          where: { username: { [Op.ne]: user.username } },
+        });
+
         return users;
       } catch (err) {
         console.log(err);
@@ -27,15 +33,14 @@ module.exports = {
     },
     login: async (_, args) => {
       const { username, password } = args;
-
       let errors = {};
+
       try {
         if (username.trim() === "")
           errors.username = "username must not be empty";
-        if (password.trim() === "")
-          errors.password = "username must not be empty";
+        if (password === "") errors.password = "password must not be empty";
 
-        if (Object.keys(errors) > 0) {
+        if (Object.keys(errors).length > 0) {
           throw new UserInputError("bad input", { errors });
         }
 
@@ -49,18 +54,15 @@ module.exports = {
         }
 
         const correctPassword = await bcrypt.compare(password, user.password);
+
         if (!correctPassword) {
           errors.password = "password is incorrect";
           throw new AuthenticationError("password is incorrect", { errors });
         }
 
-        const token = jwt.sign(
-          {
-            username,
-          },
-          JWT_SECRET,
-          { expiresIn: "1h" }
-        );
+        const token = jwt.sign({ username }, JWT_SECRET, {
+          expiresIn: 60 * 60,
+        });
 
         return {
           ...user.toJSON(),
@@ -74,35 +76,37 @@ module.exports = {
     },
   },
   Mutation: {
-    register: async (_, args, context, info) => {
+    register: async (_, args) => {
       let { username, email, password, confirmPassword } = args;
       let errors = {};
+
       try {
-        // TODO: Validate input data
-        if (email.trim() === "") errors.email = "Email can not be empty";
+        // Validate input data
+        if (email.trim() === "") errors.email = "email must not be empty";
         if (username.trim() === "")
-          errors.username = "Username can not be empty";
+          errors.username = "username must not be empty";
         if (password.trim() === "")
-          errors.password = "Password can not be empty";
+          errors.password = "password must not be empty";
         if (confirmPassword.trim() === "")
-          errors.confirmPassword = "Confirm password can not be empty";
+          errors.confirmPassword = "repeat password must not be empty";
 
         if (password !== confirmPassword)
-          errors.confirmPassword = "Passwords must match";
+          errors.confirmPassword = "passwords must match";
 
-        // TODO: Check if username / email exists
-        // const userByUsername = await User.findOne({ where: { username } });
-        // const userByEmail = await User.findOne({ where: { email } });
+        // // Check if username / email exists
+        // const userByUsername = await User.findOne({ where: { username } })
+        // const userByEmail = await User.findOne({ where: { email } })
 
-        // if (username) errors.username = "Username is taken";
-        // if (email) errors.email = "Email is taken";
-        //
+        // if (userByUsername) errors.username = 'Username is taken'
+        // if (userByEmail) errors.email = 'Email is taken'
+
         if (Object.keys(errors).length > 0) {
           throw errors;
         }
 
-        // Hash Password
+        // Hash password
         password = await bcrypt.hash(password, 6);
+
         // Create user
         const user = await User.create({
           username,
