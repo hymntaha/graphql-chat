@@ -1,7 +1,8 @@
 const { User } = require("../models");
 const bcrypt = require("bcryptjs");
 const { UserInputError, AuthenticationError } = require("apollo-server");
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
+const { JWT_SECRET } = require("../config/env.json");
 module.exports = {
   Query: {
     getUsers: async () => {
@@ -42,6 +43,16 @@ module.exports = {
           errors.password = "password is incorrect";
           throw new AuthenticationError("password is incorrect", { errors });
         }
+
+        const token = jwt.sign(
+          {
+            username,
+          },
+          JWT_SECRET,
+          { expiresIn: "1h" }
+        );
+
+        user.token = token;
 
         return user;
       } catch (err) {
