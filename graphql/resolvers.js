@@ -1,7 +1,7 @@
 const { User } = require("../models");
 const bcrypt = require("bcryptjs");
 const { UserInputError, AuthenticationError } = require("apollo-server");
-
+const jwt = require('jsonwebtoken')
 module.exports = {
   Query: {
     getUsers: async () => {
