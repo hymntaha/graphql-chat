@@ -24,15 +24,16 @@ module.exports = {
         if (password.trim() === "")
           errors.password = "username must not be empty";
 
+        if (Object.keys(errors) > 0) {
+          throw new UserInputError("bad input", { errors });
+        }
+
         const user = await User.findOne({
           where: { username },
         });
 
         if (!user) {
           errors.username = "user not found";
-        }
-
-        if (Object.keys(errors) > 0) {
           throw new UserInputError("user not found", { errors });
         }
 
