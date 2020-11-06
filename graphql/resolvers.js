@@ -3,12 +3,22 @@ const bcrypt = require("bcryptjs");
 const { UserInputError, AuthenticationError } = require("apollo-server");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../config/env.json");
+
 module.exports = {
   Query: {
-    getUsers: async () => {
+    getUsers: async (_, __, context) => {
       try {
+        if (context.req && context.req.headers.authorization) {
+          const token = context.req.headers.authorization.split("Bearer ")[1];
+          jwt.verify(token, JWT_SECRET, (err, decodedToken) => {
+            if (err) {
+              throw new AuthenticationError("Unauthorized");
+            }
+            user = decodedToken;
+          });
+        }
+
         const users = await User.findAll();
-        console.log("HEREEEEEEE", users);
         return users;
       } catch (err) {
         console.log(err);
@@ -52,9 +62,11 @@ module.exports = {
           { expiresIn: "1h" }
         );
 
-        user.token = token;
-
-        return user;
+        return {
+          ...user.toJSON(),
+          createdAt: user.createdAt.toISOString(),
+          token,
+        };
       } catch (err) {
         console.log(err);
         throw err;
