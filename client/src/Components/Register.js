@@ -35,7 +35,7 @@ export default function Register() {
               type="text"
               value={variables.username}
               onChange={(e) =>
-                setVariables({ ...variables, username: e.target.username })
+                setVariables({ ...variables, username: e.target.value })
               }
             />
           </Form.Group>
@@ -45,7 +45,7 @@ export default function Register() {
               type="password"
               value={variables.password}
               onChange={(e) =>
-                setVariables({ ...variables, password: e.target.password })
+                setVariables({ ...variables, password: e.target.value })
               }
             />
           </Form.Group>
@@ -57,7 +57,7 @@ export default function Register() {
               onChange={(e) =>
                 setVariables({
                   ...variables,
-                  confirmPassword: e.target.confirmPassword,
+                  confirmPassword: e.target.value,
                 })
               }
             />
