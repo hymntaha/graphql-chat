@@ -14,6 +14,18 @@ function App() {
               <Form.Label>Email address</Form.Label>
               <Form.Control type="email" />
             </Form.Group>
+            <Form.Group>
+              <Form.Label>Username</Form.Label>
+              <Form.Control type="text" />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control type="password" />
+            </Form.Group>
             <Button variant="success" type="submit">
               Register
             </Button>
