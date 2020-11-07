@@ -5,10 +5,10 @@ import "./App.scss";
 
 function App() {
   return (
-    <Container>
-      <Row>
-        <Col>
-          <h1>Register</h1>
+    <Container className="pt-5">
+      <Row className="bg-white py-5 justify-content-center">
+        <Col sm={8} md={6} lg={4}>
+          <h1 className="text-center">Register</h1>
           <Form>
             <Form.Group>
               <Form.Label>Email address</Form.Label>
@@ -26,9 +26,11 @@ function App() {
               <Form.Label>Confirm Password</Form.Label>
               <Form.Control type="password" />
             </Form.Group>
-            <Button variant="success" type="submit">
-              Register
-            </Button>
+            <div className="text-center">
+              <Button variant="success" type="submit">
+                Register
+              </Button>
+            </div>
           </Form>
         </Col>
       </Row>
