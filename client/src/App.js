@@ -10,10 +10,10 @@ function App() {
         <Col>
           <h1>Register</h1>
           <Form>
-            <Form.Grou>
+            <Form.Group>
               <Form.Label>Email address</Form.Label>
               <Form.Control type="email" />
-            </Form.Grou>
+            </Form.Group>
             <Button variant="success" type="submit">
               Register
             </Button>
