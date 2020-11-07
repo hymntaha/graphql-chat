@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col, Form } from "react-bootstrap";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
 import "./App.scss";
 
@@ -10,15 +10,12 @@ function App() {
         <Col>
           <h1>Register</h1>
           <Form>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Grou>
               <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-              </Form.Text>
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Submit
+              <Form.Control type="email" />
+            </Form.Grou>
+            <Button variant="success" type="submit">
+              Register
             </Button>
           </Form>
         </Col>
