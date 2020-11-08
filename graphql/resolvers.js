@@ -122,10 +122,12 @@ module.exports = {
     sendMessage: async (parent, { to, content }, { user }) => {
       try {
         if (!user) throw new AuthenticationError("Unauthenticated");
-        const recipient = await User.find({ where: { username: to } });
+        const recipient = await User.findOne({ where: { username: to } });
 
         if (!recipient) {
           throw new UserInputError("User not found");
+        } else if (recipient.username === user.username) {
+          throw new UserInputError("You cant message yourself");
         }
 
         if (content.trim() === "") {
