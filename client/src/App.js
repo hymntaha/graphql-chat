@@ -20,9 +20,9 @@ function App() {
         <BrowserRouter>
           <Container className="pt-5">
             <Switch>
-              <Route exact path="/" component={Home} />
-              <Route path="/register" component={Register} />
-              <Route path="/login" component={Login} />
+              <DynamicRoute exact path="/" component={Home} authenticated/>
+              <DynamicRoute path="/register" component={Register} guest/>
+              <DynamicRoute path="/login" component={Login} guest/>
             </Switch>
           </Container>
         </BrowserRouter>
