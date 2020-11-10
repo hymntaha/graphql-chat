@@ -14,7 +14,6 @@ if (token) {
   } else {
     user = decodedToken;
   }
-  console.log(expiresAt);
 } else {
   console.log("No token found!");
 }

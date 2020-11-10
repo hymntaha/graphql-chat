@@ -11,6 +11,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 
 import { AuthProvider } from "./context/auth";
+import DynamicRoute from "./util/DynamicRoute";
 
 function App() {
   return (
