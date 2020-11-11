@@ -1,5 +1,6 @@
 import React, { createContext, useReducer, useContext } from "react";
 import jwtDecode from "jwt-decode";
+
 const AuthStateContext = createContext();
 const AuthDispatchContext = createContext();
 
@@ -14,15 +15,12 @@ if (token) {
   } else {
     user = decodedToken;
   }
-} else {
-  console.log("No token found!");
-}
+} else console.log("No token found");
 
 const authReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
       localStorage.setItem("token", action.payload.token);
-
       return {
         ...state,
         user: action.payload,
@@ -40,9 +38,12 @@ const authReducer = (state, action) => {
 
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, { user });
+
   return (
     <AuthDispatchContext.Provider value={dispatch}>
-      <AuthStateContext value={state}>{children}</AuthStateContext>
+      <AuthStateContext.Provider value={state}>
+        {children}
+      </AuthStateContext.Provider>
     </AuthDispatchContext.Provider>
   );
 };
