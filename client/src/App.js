@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Switch } from "react-router-dom";
 
 import ApolloProvider from "./ApolloProvider";
 
@@ -20,9 +20,9 @@ function App() {
         <BrowserRouter>
           <Container className="pt-5">
             <Switch>
-              <DynamicRoute exact path="/" component={Home} authenticated/>
-              <DynamicRoute path="/register" component={Register} guest/>
-              <DynamicRoute path="/login" component={Login} guest/>
+              <DynamicRoute exact path="/" component={Home} authenticated />
+              <DynamicRoute path="/register" component={Register} guest />
+              <DynamicRoute path="/login" component={Login} guest />
             </Switch>
           </Container>
         </BrowserRouter>
