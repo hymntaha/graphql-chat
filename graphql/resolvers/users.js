@@ -13,6 +13,7 @@ module.exports = {
         if (!user) throw new AuthenticationError("Unauthenticated");
 
         const users = await User.findAll({
+          attributes: ["username", "imageUrl", "createdAt"],
           where: { username: { [Op.ne]: user.username } },
         });
 
