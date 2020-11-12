@@ -14,8 +14,6 @@ export default function Home({ history }) {
     history.push("/login");
   };
 
-  if (messagesData) console.log(messagesData.getMessages);
-
   return (
     <Fragment>
       <Row className="bg-white justify-content-around mb-1">
