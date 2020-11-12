@@ -1,6 +1,6 @@
 import React from "react";
 import { gql, useQuery } from "@apollo/client";
-import { Col } from "react-bootstrap";
+import { Col, Image } from "react-bootstrap";
 
 const GET_USERS = gql`
   query getUsers {
@@ -19,7 +19,7 @@ const GET_USERS = gql`
   }
 `;
 
-export default function Users() {
+export default function Users({ setSelectedUser }) {
   const { loading, data, error } = useQuery(GET_USERS);
 
   let usersMarkup;
