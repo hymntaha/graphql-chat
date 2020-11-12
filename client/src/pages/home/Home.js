@@ -54,7 +54,7 @@ export default function Home({ history }) {
         </Button>
       </Row>
       <Row className="bg-white">
-        <Users setSelectedUser={selectedUser} />
+        <Users setSelectedUser={setSelectedUser} selectedUser={selectedUser} />
         <Col xs={8}>
           {messagesData && messagesData.getMessages.length > 0 ? (
             messagesData.getMessages.map((message) => (
