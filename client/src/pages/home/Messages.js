@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { gql, useLazyQuery } from "@apollo/client";
 import { Col } from "react-bootstrap";
-import { useMessageState } from "../../context/message";
+import { useMessageState, useMessageDispatch } from "../../context/message";
 const GET_MESSAGES = gql`
   query getMessages($from: String!) {
     getMessages(from: $from) {
@@ -48,7 +48,7 @@ export default function Messages() {
   } else if (messagesLoading) {
     selectedChatMarkup = <p>Loading...</p>;
   } else if (messages.length > 0) {
-    selectedChatMarkup = map((message) => (
+    selectedChatMarkup = messages.map((message) => (
       <p key={message.uuid}>{message.content}</p>
     ));
   } else if (messages.length === 0) {
