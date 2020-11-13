@@ -71,7 +71,9 @@ export default function Messages() {
 
   const submitMessage = (e) => {
     e.preventDefault();
-    if (content === "") return;
+    if (content === "" || !selectedUser) return;
+
+    setContent("");
 
     //Mutation for sending the message
     sendMessage({ variables: { to: selectedUser.username, content } });
