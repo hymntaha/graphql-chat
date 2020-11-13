@@ -1,8 +1,20 @@
-import React, { Fragment, useEffect } from "react";
-import { gql, useLazyQuery } from "@apollo/client";
-import { Col } from "react-bootstrap";
+import React, { Fragment, useEffect, useState } from "react";
+import { gql, useLazyQuery, useMutation } from "@apollo/client";
+import { Col, Form } from "react-bootstrap";
 import { useMessageState, useMessageDispatch } from "../../context/message";
 import Message from "./Message";
+
+const SEND_MESSAGE = gql`
+  mutation sendMessage($to: String!, $content: String!) {
+    sendMessage(to: $to, content: $content) {
+      uuid
+      from
+      to
+      content
+      createdAt
+    }
+  }
+`;
 
 const GET_MESSAGES = gql`
   query getMessages($from: String!) {
@@ -18,6 +30,7 @@ const GET_MESSAGES = gql`
 export default function Messages() {
   const { users } = useMessageState();
   const dispatch = useMessageDispatch();
+  const [content, setContent] = useState("");
 
   const selectedUser = users?.find((u) => u.selected === true);
   const messages = selectedUser?.messages;
@@ -25,6 +38,18 @@ export default function Messages() {
     getMessages,
     { loading: messagesLoading, data: messagesData },
   ] = useLazyQuery(GET_MESSAGES);
+
+  const [sendMessage] = useMutation(SEND_MESSAGE, {
+    onCompleted: (data) =>
+      dispatch({
+        type: "ADD_MESSAGE",
+        payload: {
+          username: selectedUser.username,
+          message: data.sendMessage,
+        },
+      }),
+    onError: (err) => console.log(err),
+  });
 
   useEffect(() => {
     if (selectedUser && !selectedUser.messages) {
@@ -43,6 +68,14 @@ export default function Messages() {
       });
     }
   }, [messagesData]);
+
+  const submitMessage = (e) => {
+    e.preventDefault();
+    if (content === "") return;
+
+    //Mutation for sending the message
+    sendMessage({ variables: { to: selectedUser.username, content } });
+  };
 
   let selectedChatMarkup;
   if (!messages && !messagesLoading) {
@@ -66,6 +99,17 @@ export default function Messages() {
   return (
     <Col xs={10} md={8} className="messages-box d-flex flex-column-reverse">
       {selectedChatMarkup}
+      <Form onSubmit={submitMessage}>
+        <Form.Group>
+          <Form.Control
+            type="text"
+            className="rounden-pill bg-secondary"
+            placeholder="Type a message.."
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
+        </Form.Group>
+      </Form>
     </Col>
   );
 }
