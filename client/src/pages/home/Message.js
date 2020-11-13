@@ -9,7 +9,15 @@ export default function Message({ message }) {
   const received = !sent;
 
   return (
-    <div className="d-flex my-3">
+    <div
+      className={
+        (classNames("d-flex my-3"),
+        {
+          "ml-auto": sent,
+          "ml-left": received,
+        })
+      }
+    >
       <div
         className={classNames("py-2 px3 rounded-pill bg-primary", {
           "bg-primary": sent,

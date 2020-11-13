@@ -56,5 +56,9 @@ export default function Messages() {
   } else if (messages.length === 0) {
     selectedChatMarkup = <p>You are now connected! Send your first message</p>;
   }
-  return <Col xs={8}>{selectedChatMarkup}</Col>;
+  return (
+    <Col xs={8} className="messages-box d-flex flex-column-reverse">
+      {selectedChatMarkup}
+    </Col>
+  );
 }
