@@ -71,7 +71,7 @@ export default function Messages() {
 
   const submitMessage = (e) => {
     e.preventDefault();
-    if (content === "" || !selectedUser) return;
+    if (content.trim() === "" || !selectedUser) return;
 
     setContent("");
 
@@ -114,7 +114,11 @@ export default function Messages() {
               value={content}
               onChange={(e) => setContent(e.target.value)}
             />
-            <i className="fas fa-paper-plane fa-2x text-primary ml-2"></i>
+            <i
+              role="button"
+              className="fas fa-paper-plane fa-2x text-primary ml-2"
+              onClick={submitMessage}
+            ></i>
           </Form.Group>
         </Form>
       </div>
