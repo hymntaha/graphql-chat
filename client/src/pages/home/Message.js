@@ -17,6 +17,7 @@ export default function Message({ message }) {
           {moment(message.createdAt).format("MMMM DD, YYYY @ h:mm a")}
         </Tooltip>
       }
+      transition={false}
     >
       <div
         className={

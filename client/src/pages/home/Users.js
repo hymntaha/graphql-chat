@@ -51,15 +51,8 @@ export default function Users() {
             dispatch({ type: "SET_SELECTED_USER", payload: user.username })
           }
         >
-          <Image
-            src={user.imageUrl}
-            roundedCircle
-            className={classNames("user-div d-flex p-3", {
-              "bg-white": selected,
-            })}
-            style={{ width: 50, height: 50, objectFit: "cover" }}
-          />
-          <div>
+          <Image src={user.imageUrl} className="user-image mr-2" />
+          <div className="d-none d-md-block">
             <p className="text-success">{user.username}</p>
             <p className="font-weight-light">
               {user.latestMessage
