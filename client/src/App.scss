@@ -22,4 +22,10 @@ body {
 .messages-box {
   height: 500px;
   overflow-y: scroll;
+
+  scroll-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
