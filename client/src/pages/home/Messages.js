@@ -107,7 +107,7 @@ export default function Messages() {
           <Form.Group>
             <Form.Control
               type="text"
-              className="rounden-pill bg-secondary border-0"
+              className="message-input rounded-pill bg-secondary border-0 p-4"
               placeholder="Type a message.."
               value={content}
               onChange={(e) => setContent(e.target.value)}
