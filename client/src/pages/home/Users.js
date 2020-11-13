@@ -45,14 +45,14 @@ export default function Users() {
       return (
         <div
           role="button"
-          className="user-div d-flex p-3"
+          className="user-div d-flex justify-content-center justify-content-md-center p-3"
           key={user.username}
           onClick={() =>
             dispatch({ type: "SET_SELECTED_USER", payload: user.username })
           }
         >
-          <Image src={user.imageUrl} className="user-image mr-2" />
-          <div className="d-none d-md-block">
+          <Image src={user.imageUrl} className="user-imag" />
+          <div className="d-none d-md-block ml-2">
             <p className="text-success">{user.username}</p>
             <p className="font-weight-light">
               {user.latestMessage
@@ -65,7 +65,7 @@ export default function Users() {
     });
   }
   return (
-    <Col xs={4} className="p-0 bg-secondary">
+    <Col xs={4} md={4} className="p-0 bg-secondary">
       {usersMarkup}
     </Col>
   );
