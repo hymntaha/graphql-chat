@@ -10,32 +10,34 @@ export default function Message({ message }) {
   const received = !sent;
 
   return (
-      <OverlayTrigger key={placement} placement={placement} overlay={
-          <Tooltip id={`tooltip-${placement}`}>
-              Tooltip  on <strong>{placement}</strong>
-          </Tooltip>
-      }>
-
-          </OverlayTrigger>
-    <div
-      className={
-        (classNames("d-flex my-3"),
-        {
-          "ml-auto": sent,
-          "ml-left": received,
-        })
+    <OverlayTrigger
+      placement={sent ? "right" : "left"}
+      overlay={
+        <Tooltip>
+          {moment(message.createdAt).format("MMMM DD, YYYY @ h:mm a")}
+        </Tooltip>
       }
     >
       <div
-        className={classNames("py-2 px3 rounded-pill bg-primary", {
-          "bg-primary": sent,
-          "bg-secondary": received,
-        })}
+        className={
+          (classNames("d-flex my-3"),
+          {
+            "ml-auto": sent,
+            "ml-left": received,
+          })
+        }
       >
-        <p className={classNames({ "text-white": sent })} key={message.uuid}>
-          {message.content}
-        </p>
+        <div
+          className={classNames("py-2 px3 rounded-pill bg-primary", {
+            "bg-primary": sent,
+            "bg-secondary": received,
+          })}
+        >
+          <p className={classNames({ "text-white": sent })} key={message.uuid}>
+            {message.content}
+          </p>
+        </div>
       </div>
-    </div>
+    </OverlayTrigger>
   );
 }
