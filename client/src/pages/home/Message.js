@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuthState } from "../../context/auth";
 import classNames from "classNames";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 export default function Message({ message }) {
   const { user } = useAuthState();
@@ -9,6 +10,13 @@ export default function Message({ message }) {
   const received = !sent;
 
   return (
+      <OverlayTrigger key={placement} placement={placement} overlay={
+          <Tooltip id={`tooltip-${placement}`}>
+              Tooltip  on <strong>{placement}</strong>
+          </Tooltip>
+      }>
+
+          </OverlayTrigger>
     <div
       className={
         (classNames("d-flex my-3"),
