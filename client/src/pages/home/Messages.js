@@ -106,7 +106,7 @@ export default function Messages() {
       </div>
       <div>
         <Form onSubmit={submitMessage}>
-          <Form.Group>
+          <Form.Group className="d-flex aling-items-center">
             <Form.Control
               type="text"
               className="message-input rounded-pill bg-secondary border-0 p-4"
@@ -114,6 +114,7 @@ export default function Messages() {
               value={content}
               onChange={(e) => setContent(e.target.value)}
             />
+            <i className="fas fa-paper-plane fa-2x text-primary ml-2"></i>
           </Form.Group>
         </Form>
       </div>
